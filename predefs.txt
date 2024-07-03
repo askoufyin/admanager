@@ -1,0 +1,11 @@
+# This file contains
+; Predefined variables
+#### comment ####
+abc
+abc=1
+	abc2 = 512
+		hello			=			world
+		строка = что то там # и комментарий
+
+
+# EOF

@@ -1,0 +1,30 @@
+<RCC>
+  <qresource prefix="AdManager"/>
+  <qresource prefix="icons">
+    <file>Copy.png</file>
+    <file>Cut.png</file>
+    <file>Delete.png</file>
+    <file>Down.png</file>
+    <file>Exit.png</file>
+    <file>Find.png</file>
+    <file>Folder.png</file>
+    <file>Help.png</file>
+    <file>Image properties.png</file>
+    <file>Image.png</file>
+    <file>Left.png</file>
+    <file>New.png</file>
+    <file>Ok.png</file>
+    <file>Open.png</file>
+    <file>Options.png</file>
+    <file>Paste.png</file>
+    <file>Refresh.png</file>
+    <file>Right.png</file>
+    <file>Save as.png</file>
+    <file>Save.png</file>
+    <file>Up.png</file>
+  </qresource>
+  <qresource prefix="icons_medium"/>
+  <qresource prefix="icons_large">
+    <file>icons/large/tablet-lime.png</file>
+  </qresource>
+</RCC>
