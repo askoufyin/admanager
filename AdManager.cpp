@@ -1,5 +1,7 @@
 ﻿#include <QObject>
+#include <QDir>
 #include "AdManager.h"
+#include "GlobalAppConfig.h"
 #include "DlgPlaylists.h"
 #include "DlgSettings.h"
 
@@ -12,6 +14,7 @@ AdManager::AdManager(QWidget* parent)
     qDebug() << "----- Starting up -----";
 
     setupDefaults();
+    readConfig();
     startHttpd();
     createTrayIcon();
     createTrayMenu();
@@ -21,6 +24,14 @@ AdManager::AdManager(QWidget* parent)
 AdManager::~AdManager()
 {
     delete _sicon;
+}
+
+
+void
+AdManager::readConfig(void)
+{
+    qDebug() << "Reading global config";
+    readGlobalConfig(QDir::currentPath());
 }
 
 
@@ -71,7 +82,6 @@ AdManager::createTrayMenu(void)
 void
 AdManager::showTrayMenu(void)
 {
-    //_traymenu->setPo
     _traymenu->exec(QCursor::pos());
 }
 

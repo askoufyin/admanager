@@ -1,11 +1,12 @@
-# This file contains
+﻿# This file contains
 ; Predefined variables
 #### comment ####
 abc
 abc=1
 	abc2 = 512
 		hello			=			world
-		������ = ��� �� ��� # � �����������
-
+		строка = что то там # и комментарий
+		string = значение на кириллице
+abc3 = тоже можно, например $$abc = $$abc1 "$abc" $$abc2 "$abc2"
 
 # EOF

@@ -25,6 +25,7 @@ protected:
     QSystemTrayIcon* _sicon;
 protected:
     void setupDefaults();
+    void readConfig();
     void createTrayIcon();
     void createTrayMenu();
     void startHttpd();

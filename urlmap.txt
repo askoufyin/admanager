@@ -3,3 +3,7 @@
 /					index.tpl
 /index.html			index.tpl
 /index.htm			index.tpl
+/login				login.tpl
+/login.html			login.tpl
+/login.htm			login.tpl
+/dologin			login.tpl

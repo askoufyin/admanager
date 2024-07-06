@@ -6,8 +6,6 @@
 #include "Char.h"
 
 
-_MUON_NAMESPACE_BEGIN
-
 
 /*! @brief Fetch value by the key or throw exception if key not found
  * @return Item associated with the key
@@ -653,7 +651,4 @@ Dict::xlat(const char *str, u_int flags)
     xlatBuf[xlatPtr] = '\0';
     return xlatBuf;
 }
-
-
-_MUON_NAMESPACE_END
 

@@ -9,4 +9,7 @@
 #define DEFAULT_HTTPD_ADDR  INADDR_ANY
 
 
+constexpr auto VAR_REGEX = "[$|%]\\((?<varb>[a-z]+[a-z0-9_-]+)\\)|\\{(?<varc>[a-z]+[a-z0-9_-]+)\\}";
+
+
 #endif

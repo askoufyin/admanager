@@ -92,6 +92,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dict.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GlobalAppConfig.cpp" />
     <ClCompile Include="Httpd.cpp" />
     <QtRcc Include="AdManager.qrc" />
     <QtUic Include="AdManager.ui" />
@@ -109,13 +113,21 @@
     <QtMoc Include="Client.h" />
     <ClInclude Include="Consts.h" />
     <QtMoc Include="DlgPlaylists.h" />
+    <ClInclude Include="Dict.h" />
     <ClInclude Include="DlgSettings.h" />
+    <ClInclude Include="GlobalAppConfig.h" />
     <ClInclude Include="Httpd.h" />
     <ClInclude Include="Playlist.h" />
     <ClInclude Include="Protocol.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="html\index.html" />
+    <None Include="html\index.tpl" />
+    <None Include="html\login.tpl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="predefs.txt" />
+    <Text Include="urlmap.txt" />
+    <Text Include="Текст.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
