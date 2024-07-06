@@ -92,6 +92,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Debug\Actions.cpp" />
     <ClCompile Include="Dict.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -125,6 +126,7 @@
     <None Include="html\login.tpl" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Debug\users.txt" />
     <Text Include="predefs.txt" />
     <Text Include="urlmap.txt" />
     <Text Include="Текст.txt" />

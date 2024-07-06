@@ -6,4 +6,4 @@
 /login				login.tpl
 /login.html			login.tpl
 /login.htm			login.tpl
-/dologin			login.tpl
+/dologin			!dologin
