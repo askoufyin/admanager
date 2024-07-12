@@ -44,6 +44,8 @@ class Httpd;
 
 
 class HttpClient: public QObject {
+    Q_OBJECT
+
 protected:
     Httpd* _server;
     QTcpSocket *_sock;
@@ -69,7 +71,8 @@ public:
     virtual QByteArray expandTemplateVars(const QByteArray&);
     virtual QString getVar(const QString &, const QString& = "") const;
     //virtual int findMacro(const QByteArrayView&, int);
-signals:
+//signals:
+public slots:
     void clientClosedConnection(HttpClient*);
 protected slots:
     void readyRead(void);
@@ -80,6 +83,8 @@ typedef QList<HttpClient*> HttpClients;
 
 
 class Httpd: public QObject {
+    Q_OBJECT
+
 public:
     enum {
         HTTP_OK = 200,
@@ -100,7 +105,7 @@ protected:
 #ifdef _DEBUG
     void printPredefVars(void);
 #endif
-protected slots:
+public slots:
     void newConnection();
     void clientClosedConnection(HttpClient*);
 public:

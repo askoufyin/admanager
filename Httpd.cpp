@@ -24,11 +24,14 @@ void
 Httpd::readPredefVars(void)
 {
     QDir dir;
-    QFile pdfv("predefs.txt");
+    QFile pdfv(PREDEFSFILE_NAME);
     QString s, key, val;
     int pos;
 
     s = dir.currentPath();
+
+    qDebug() << "Reading" << PREDEFSFILE_NAME;
+
     if (pdfv.open(QIODevice::ReadOnly)) {
         QTextStream in(&pdfv);
 
@@ -83,6 +86,8 @@ Httpd::readUrlMap(void)
     QString map, url, arg;
     int cpos, ws;
 
+    qDebug() << "Reading" << globalConfig.urlmap;
+
     if (urlMap.open(QIODevice::ReadOnly)) {
         while (!urlMap.atEnd()) {
             map = urlMap.readLine();
@@ -119,6 +124,9 @@ Httpd::readUrlMap(void)
         }
 
         urlMap.close();
+    }
+    else {
+        qDebug() << "Failed to open" << globalConfig.urlmap;
     }
 }
 
@@ -172,7 +180,7 @@ Httpd::newConnection()
 
         cl = new HttpClient(this, sock);
 
-        QObject::connect(cl, SIGNAL(clientClosedConnection(HttpClient*)), this, SLOT(clientClosedConnection(HttpClient*)));
+        QObject::connect(cl, &HttpClient::clientClosedConnection, this, &Httpd::clientClosedConnection);
 
         _clients.append(cl);
     }
@@ -183,17 +191,23 @@ void
 Httpd::clientClosedConnection(HttpClient* cl)
 {
     int i = _clients.indexOf(cl);
-    delete _clients[i];
 
+    if (i >= 0) {
+        qDebug() << QString("Client %1 closed connection").arg(i);
+        delete _clients[i];
+    }
+    else {
+    }
 }
 
 
 bool
 Httpd::start(void)
 {
-    qDebug() << "MicroHTTPD: Start";
+    qDebug() << "httpd starting";
+
     if (_srv.listen(_addr, _port)) {
-        qDebug() << QString("MicroHTTPD: Listening for incoming connections on %1:%2").arg(_addr.toString()).arg(_port);
+        qDebug() << QString("Listening for incoming connections on %1:%2").arg(_addr.toString()).arg(_port);
 
         
         readPredefVars();
@@ -344,21 +358,24 @@ HttpClient::parseHttpHeader(const QByteArrayList& hdr)
                 case HttpMethod::PUT:
                     break;
                 default:
-                    qDebug() << QString("Http method %1 unsupported yet").arg(cargs[0]); 
+                    qDebug() << QString("Http method %1 unsupported yet").arg(cargs[0]);
                     return;
                 }
+
+                _uri = cargs[1].trimmed();
+                _proto = cargs[2].trimmed();
+
+                qDebug() << "URI:" << _uri;
+                qDebug() << "Protocol Version:" << _proto;
             }
-
-            _uri = cargs[1].trimmed();
-            _proto = cargs[2].trimmed();
-
-            qDebug() << "URI:" << _uri;
-            qDebug() << "Protocol Version:" << _proto;
         }
         else {
             cargs = line.split(": ");
             if (2 == cargs.count()) {
                 //_header[cargs[0]] = cargs[1];
+                if ("Connection:" == cargs[0]) {
+                    qDebug() << "!!! Connection !!!" << cargs[1];
+                }
                 qDebug() << cargs[0] << ":" << cargs[1];
             }
             else {
@@ -547,69 +564,112 @@ HttpClient::parseCommandAndReply(QByteArray& cmd)
     QByteArray c;
     QString content, resp, uri;
     QFile ftmpl;
-    int clen; // , errcode;
+    int clen, status; // , errcode;
 
     /* Supported HTTP Methods for now is only GET and POST 
      */
     lines = cmd.split('\n');
     parseHttpHeader(lines);
 
+    status = 200;
+
     if (lines[0].startsWith("GET")) {
-        uri = QDir::currentPath() + "\\" + globalConfig.tpl_path + "\\" + _server->mapUrl(_uri);
+        QString mapped;
 
-        uri = QDir::cleanPath(uri);
+        qDebug() << "GET" << _uri;
 
-        qDebug() << _uri << " mapped to " << uri;
-
-        ftmpl.setFileName(uri);
-
-        if (!ftmpl.open(QIODevice::ReadOnly)) {
-            content = QString(
-                "<html>\r\n"
-                "<head>\r\n"
-                "<title>Внутренняя ошибка</title>\r\n"
-                "</head>\r\n"
-                "<body>\r\n"
-                "<h2>Невозможно открыть файл %1 для чтения.</h2>\r\n"
-                "</body>\r\n"
-                "</html>\r\n"
-            )
-                .arg(ftmpl.fileName());
-
-            c = content.toUtf8();
-            clen = c.length();
-
-            // Http error 500
-            resp = QString("HTTP/1.1 500 Internal Server Error\r\n"
-                "Content-Type: %1; charset=%2\r\n"
-                "Content-Length: %3\r\n"
+        mapped = _server->mapUrl(_uri);
+        if (0 == mapped.length()) {
+            resp = QString("HTTP/1.1 404 Not Found\r\n"
+                "Status: 404 Not Found\r\n"
                 "\r\n")
-                .arg("text/html")
-                .arg("utf-8")
-                .arg(clen);
+                ;
+
+            content = "The requested resource was not found on this server";
+            
+            status = 404;
         }
         else {
-            content = ftmpl.readAll();
 
-            c = expandTemplateVars(content.toUtf8());
-            clen = c.length();
+            uri = QDir::currentPath() + "\\" + globalConfig.tpl_path + "\\" + mapped;
 
-            resp = QString(
-                "HTTP/1.1 200 Ok\r\n"
-                "Content-Type: %1; charset=%2\r\n"
-                "Content-Length: %3\r\n"
-                "\r\n"
-            )
-                .arg("text/html")
-                .arg("utf-8")
-                .arg(clen);
+            uri = QDir::cleanPath(uri);
+
+            qDebug() << _uri << " mapped to " << uri;
+
+            ftmpl.setFileName(uri);
+
+            if (!ftmpl.open(QIODevice::ReadOnly)) {
+                if (ftmpl.error() == QFileDevice::OpenError) {
+                    content = "The requested resource was not found on this server";
+
+                    resp = QString("HTTP/1.1 404 Not Found\r\n"
+                        "Status: 404 Not Found\r\n"
+                        "Content-Type: text/plain\r\n"
+                        "Content-Length: %1\r\n"
+                        "\r\n"
+                        "%2")
+                        .arg(content.length())
+                        .arg(content)
+                        ;
+
+                    status = 404;
+                }
+                else {
+                    status = 500;
+
+                    content = QString(
+                        "<html>\r\n"
+                        "<head>\r\n"
+                        "<title>Внутренняя ошибка</title>\r\n"
+                        "</head>\r\n"
+                        "<body>\r\n"
+                        "<h2>Невозможно открыть файл %1 для чтения.</h2>\r\n"
+                        "</body>\r\n"
+                        "</html>\r\n"
+                    )
+                        .arg(ftmpl.fileName());
+
+                    c = content.toUtf8();
+                    clen = c.length();
+
+                    // Http error 500
+                    resp = QString("HTTP/1.1 500 Internal Server Error\r\n"
+                        "Content-Type: %1; charset=%2\r\n"
+                        "Content-Length: %3\r\n"
+                        "\r\n")
+                        .arg("text/html")
+                        .arg("utf-8")
+                        .arg(clen);
+                }
+            }
+            else {
+                content = ftmpl.readAll();
+
+                c = expandTemplateVars(content.toUtf8());
+                clen = c.length();
+
+                resp = QString(
+                    "HTTP/1.1 200 Ok\r\n"
+                    "Content-Type: %1; charset=%2\r\n"
+                    "Content-Length: %3\r\n"
+                    "\r\n"
+                )
+                    .arg("text/html")
+                    .arg("utf-8")
+                    .arg(clen);
+            }
+
+
+            resp = expandTemplateVars(resp.toUtf8());
         }
-
-        
-        resp = expandTemplateVars(resp.toUtf8());
 
         _sock->write(resp.toUtf8());
         _sock->write(c);
+
+        if (200 != status) {
+            _sock->close();
+        }
 
         //qDebug() << "Response 200\r\n" << resp;
 

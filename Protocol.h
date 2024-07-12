@@ -5,15 +5,32 @@
 #include <stdint.h>
 
 
+enum _protocol_msg_id {
+    PROTO_MSG_HELLO = 100,          // С->К Проверка поддержки протокола
+    PROTO_MSG_PLEASE_INTRODUCE,     // С->К Сервер просит представиться
+    PROTO_MSG_LOGIN,                // К->C Логин
+    PROTO_MSG_AUTH_REQ,             // C->К Требование авторизации
+    PROTO_MSG_PASSWORD_REQUIRED,    // С->К Требуется предоставить пароль
+    PROTO_MSG_PASSWORD,             // К->C Пароль
+    PROTO_MSG_ME,                   // К->С Описание клиента
+    PROTO_MSG_PROCEED,              // С->К Всё ок, сервер готов принимать команды
+    PROTO_MSG_AUTH = 150,           // К->C Данные для авторизации
+    PROTO_MSG_QUERY_PLAYLIST,       // К->С Запрос своего плейлиста
+};
+
+
 enum _proto_cmd {
     PROTO_CMD_PING = 0,				// Используется для определения времени последней активности
-    PROTO_CMD_SERVER_INFO = 1,		// Сервер -> клиент, первое сообщение после принятия соединения
-    PROTO_CMD_CLIENT_INFO = 2,		// Клиент -> сервер, в ответ на PROTO_CMD_SERVER_INFO
 
+    PROTO_CMD_SERVER_INFO,		    // C->К первое сообщение после принятия соединения
+    PROTO_CMD_CLIENT_INFO,		    // К->С в ответ на PROTO_CMD_SERVER_INFO
     PROTO_CMD_AUTH,					// Данные авторизации от клиента
 
     PROTO_CMD_CONTENT_INFO,
     PROTO_CMD_CONTENT_DATA,
+
+    PROTO_CMD_QUERY_PLAYLIST,       // Запрос клиента к серверу о своём плейлисте
+    PROTO_CMD_PLAYLIST,             // Ответ сервера клиенту с содержанием плейлиста
 
     PROTO_CMD_LAST
 };

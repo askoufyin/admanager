@@ -1,0 +1,8 @@
+# This is an users file
+#
+# NB: set password (for example, to 'nologin') for 'guest' account to disable guest logins
+# '.' used as password means that user will be prompted to change password at next login (ignored for 'guest')
+#
+guest:guest:
+askoufyin:admin:.
+roman:admin:.

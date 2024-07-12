@@ -1,9 +1,10 @@
 ﻿# This file contains URL mapping to the internal template files
 #
-/					index.tpl
-/index.html			index.tpl
-/index.htm			index.tpl
-/login				login.tpl
-/login.html			login.tpl
-/login.htm			login.tpl
+/					index.html
+/index.html			index.html
+/index.htm			index.html
+/login				index.html
+/login.html			login.html
+/login.htm			login.html
 /dologin			!dologin
+/favicon.ico		favicon.ico

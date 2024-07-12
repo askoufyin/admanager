@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>dlgSyncProcess</class>
+ <widget class="QDialog" name="dlgSyncProcess">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>474</width>
+    <height>364</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Идёт синхронизация устройства</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QProgressBar" name="pbTotal">
+     <property name="value">
+      <number>0</number>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelFile">
+     <property name="text">
+      <string>untitled.jpg</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QProgressBar" name="pbFile">
+     <property name="value">
+      <number>0</number>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="cbShowDetails">
+     <property name="text">
+      <string>Показать детали</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QListWidget" name="listDetails">
+     <item>
+      <property name="text">
+       <string>Начало работы 08.07.2024 20:11</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Соединение с 192.168.1.111:7000...</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>cbShowDetails</tabstop>
+  <tabstop>listDetails</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

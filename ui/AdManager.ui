@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>733</width>
+    <width>603</width>
     <height>471</height>
    </rect>
   </property>
@@ -31,7 +31,7 @@
         <string>Устройство 1</string>
        </property>
        <property name="icon">
-        <iconset resource="AdManager.qrc">
+        <iconset resource="../AdManager.qrc">
          <normaloff>:/icons_large/icons/large/tablet-lime.png</normaloff>:/icons_large/icons/large/tablet-lime.png</iconset>
        </property>
        <property name="flags">
@@ -43,7 +43,7 @@
         <string>Устройство 2</string>
        </property>
        <property name="icon">
-        <iconset resource="AdManager.qrc">
+        <iconset resource="../AdManager.qrc">
          <normaloff>:/icons_large/icons/large/tablet-lime.png</normaloff>:/icons_large/icons/large/tablet-lime.png</iconset>
        </property>
        <property name="flags">
@@ -59,7 +59,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>733</width>
+     <width>603</width>
      <height>21</height>
     </rect>
    </property>
@@ -124,6 +124,10 @@
    </property>
   </action>
   <action name="actUpdateAll">
+   <property name="icon">
+    <iconset resource="../AdManager.qrc">
+     <normaloff>:/icons/medium/admanager.png</normaloff>:/icons/medium/admanager.png</iconset>
+   </property>
    <property name="text">
     <string>Обновить список</string>
    </property>
@@ -194,7 +198,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="AdManager.qrc"/>
+  <include location="../AdManager.qrc"/>
  </resources>
  <connections/>
 </ui>

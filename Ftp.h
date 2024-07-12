@@ -3,8 +3,6 @@
 
 
 #include <stdint.h>
-#include <lwip/sockets.h>
-#include "ff.h"
 
 
 extern int ftp_start_server(struct sockaddr_in *addr);
