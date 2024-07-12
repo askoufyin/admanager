@@ -1,30 +1,32 @@
 <RCC>
-  <qresource prefix="AdManager"/>
-  <qresource prefix="icons">
-    <file>icons/Copy.png</file>
-    <file>icons/Cut.png</file>
-    <file>icons/Delete.png</file>
-    <file>icons/Down.png</file>
-    <file>icons/Exit.png</file>
-    <file>icons/Find.png</file>
-    <file>icons/Folder.png</file>
-    <file>icons/Help.png</file>
-    <file>icons/Image properties.png</file>
-    <file>icons/Image.png</file>
-    <file>icons/Left.png</file>
-    <file>icons/New.png</file>
-    <file>icons/Ok.png</file>
-    <file>icons/Open.png</file>
-    <file>icons/Options.png</file>
-    <file>icons/Paste.png</file>
-    <file>icons/Refresh.png</file>
-    <file>icons/Right.png</file>
-    <file>icons/Save as.png</file>
-    <file>icons/Save.png</file>
-    <file>icons/Up.png</file>
-  </qresource>
-  <qresource prefix="icons_medium"/>
-  <qresource prefix="icons_large">
-    <file>icons/large/tablet-lime.png</file>
-  </qresource>
+    <qresource prefix="/AdManager"/>
+    <qresource prefix="/">
+        <file>icons/small/Copy.png</file>
+        <file>icons/small/Cut.png</file>
+        <file>icons/small/Delete.png</file>
+        <file>icons/small/Down.png</file>
+        <file>icons/small/Exit.png</file>
+        <file>icons/small/Find.png</file>
+        <file>icons/small/Folder.png</file>
+        <file>icons/small/Help.png</file>
+        <file>icons/small/Image properties.png</file>
+        <file>icons/small/Image.png</file>
+        <file>icons/small/Left.png</file>
+        <file>icons/small/New.png</file>
+        <file>icons/small/Ok.png</file>
+        <file>icons/small/Open.png</file>
+        <file>icons/small/Options.png</file>
+        <file>icons/small/Paste.png</file>
+        <file>icons/small/Refresh.png</file>
+        <file>icons/small/Right.png</file>
+        <file>icons/small/Save as.png</file>
+        <file>icons/small/Save.png</file>
+        <file>icons/small/Up.png</file>
+        <file>icons/medium/admanager.png</file>
+    </qresource>
+    <qresource prefix="/icons_medium"/>
+    <qresource prefix="/icons_large">
+        <file>icons/large/tablet-lime.png</file>
+        <file>icons/large/admanager.png</file>
+    </qresource>
 </RCC>
